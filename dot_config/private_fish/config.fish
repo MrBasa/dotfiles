@@ -56,7 +56,7 @@ if status is-interactive
     end
 
     # --- Zoxide ---
-    if type -q bat
+    if type -q zoxide
         zoxide init --cmd cd fish | source
     end
     
@@ -69,8 +69,7 @@ if status is-interactive
 	function multicd -d 'This turns any run of ".." into "cd ../../"'
 		set -l length (math (string length -- $argv) - 1)
 		echo cd (string repeat -n $length ../)
-	end
-	
+	end	
 	abbr --add dotdot --regex '^\.\.+$' --function multicd
 
 	# --- LSD Directory Lister ---
@@ -102,19 +101,14 @@ if status is-interactive
 	end
 
 	# --- Tide Config ---
-    # - Prompts -
-	#set -g tide_left_prompt_items os pwd git newline character
-	#set -g tide_right_prompt_items status cmd_duration context jobs direnv bun node python rustc java php pulumi ruby go gcloud kubectl distrobox toolbox terraform aws nix_shell crystal elixir zig time
+    # Including some commonly tweaked Tide configs
 	set -g tide_prompt_transient_enabled true
 	set -g tide_add_newline_before true
 	set -g tide_context_always_display false
-
-    set -g tide_prompt_icon_connection '·'	
+    set -g tide_prompt_icon_connection '·'
 	set -g tide_prompt_color_frame_and_connection 282828
-
     # Make OS icon prominent
     set -g tide_os_color brwhite --bold
-    
     # When the user is root, make the context bold red.
     set -g tide_context_color_root brred --bold
 
