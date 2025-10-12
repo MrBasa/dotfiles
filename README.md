@@ -17,7 +17,7 @@ This is the **second and final step** in setting up a new environment. Run the f
 fish
 
 # Initialize and apply dotfiles
-chezmoi init --apply [https://github.com/mrbasa/dotfiles.git](https://github.com/mrbasa/dotfiles.git)
+chezmoi init --apply https://github.com/mrbasa/dotfiles.git
 ```
 
 This single command will clone the repository, create all the necessary symlinks, and run the automation scripts to install and configure your shell plugins and prompt.
