@@ -1,0 +1,2 @@
+# .gitattributes
+*.yml linguist-language=YAML
