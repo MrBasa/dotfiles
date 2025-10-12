@@ -1,0 +1,190 @@
+//   _____ _____ _____ _____ _____ _____ _____ _____ _____
+//  |   __|  _  |   __|_   _|   __|   __|_   _|     |  |  |
+//  |   __|     |__   | | | |   __|   __| | | |   --|     |
+//  |__|  |__|__|_____| |_| |__|  |_____| |_| |_____|__|__|  GROUPS
+//
+//  by Bina
+//  Modified by Kiel - https://www.nerdfonts.com/cheat-sheet
+//
+//  To be placed in: /usr/share/fastfetch/presets
+
+{
+    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+    "logo": {
+      	"padding": {
+    		"top": 6
+      	},
+        // Override logo colors
+        /*"color": {
+            "1": "blue",
+            "2": "bright_white"
+        }*/
+    },
+    "display": {
+          //"separator": " ➜  "
+        "separator": "   "
+    },
+    "modules": [
+        "break",
+        // -- OS --
+        {
+            "type": "os",
+            "key": "OS   ",
+            "keyColor": "31",  // = color1
+        },
+        {
+            "type": "kernel",
+            "key": " ├  ",
+            "keyColor": "31",
+        },
+        {
+            "type": "packages",
+            "key": " ├ 󰏖 ",
+            "keyColor": "31",
+        },
+        {
+            "type": "shell",
+            "key": " ├  ",
+            "keyColor": "31",
+        },
+        {
+            "type": "users",
+            "key": " ├  ", // 
+            "keyColor": "31",
+        },
+        {
+            "type": "locale",
+            "key": " └  ",
+            "keyColor": "31",
+        },
+        "break",
+        // -- WM --
+        {
+            //"type": "wm",
+            "type": "command",
+            "key": "WM   ",
+            "keyColor": "32",
+            "text": "result=$(fastfetch --logo none -s wm | sed 's/WM: //g'); if [ -z \"$result\" ]; then echo \"N/A\"; else echo \"$result\"; fi",
+        },
+        {
+            "type": "wmtheme",
+            "key": " ├ 󰉼 ",
+            "keyColor": "32",
+        },
+        {
+            "type": "icons",
+            "key": " ├ 󰀻 ",
+            "keyColor": "32",
+        },
+        {
+            "type": "cursor",
+            "key": " ├  ",
+            "keyColor": "32",
+        },
+        {
+            "type": "terminal",
+            "key": " ├  ",
+            "keyColor": "32",
+        },
+        {
+            "type": "terminalfont",
+            "key": " └  ",
+            "keyColor": "32",
+        },
+        "break",
+        // -- PC --
+        {
+            "type": "host",
+            "key": "PC   ",
+            "keyColor": "33",
+            //"format": "{5} {1} Type {2}",
+        },
+        {
+            "type": "cpu",
+            "key": " ├  ",
+            "keyColor": "33",
+            "format": "{name} ({cores-physical}C/{cores-logical}T) @ {freq-max} - {temperature}",
+            "showPeCoreCount": true,
+            "temp": true,
+        },
+        {
+            "type": "loadavg",
+            "key": " │ ├─   ",
+            "keyColor": "33",
+            "format": "Load  - 1 Min: {#bright_white}{loadavg1}{#}, 5 Min: {#bright_white}{loadavg2}{#}, 15 Min: {#bright_white}{loadavg3}{#}",
+        },
+        {
+            "type": "cpuusage",
+            "key": " │ └─   ",
+            "keyColor": "33",
+            "format": "Usage - Avg: {avg} Max: {max}",
+        },
+        {
+            "type": "gpu",
+            "key": " ├ 󰢮 ",
+            "keyColor": "33",
+            "format": "{vendor} {name} @ {frequency}",
+            "driverSpecific": true,
+            "temp": true,
+        },
+        {
+            "type": "memory",
+            "key": " ├  ",
+            "keyColor": "33",
+            // "percent": {
+            //     "type": 3,     // Show both percentage number and bar
+            //     "green": 30,   // Values below 30% in green
+            //     "yellow": 70   // 30-70% in yellow, >70% in red
+            // },
+        },
+        {
+            "type": "swap",
+            "key": " ├ 󰓡 ",
+            "keyColor": "33",
+        },
+        {
+            "type": "wifi",
+            "key": " ├ 󰑩 ",
+            "keyColor": "33",
+            "format":"{#cyan}{ssid}{#} [{#bright_white}{status}{#}] - Band: {#bright_white}{band} GHz{#}, Channel: {#bright_white}{channel}{#} - {security} {signal-quality-bar} ({signal-quality})",
+            "percent": {
+                "type": 3,
+            },
+        },
+        {
+            "type": "publicip",
+            "key": " ├ 🖧 ",
+            "keyColor": "33",
+            "format": "Public IP: {#bright_white}{ip}{#} ({#cyan}{location}{#})",
+            "timeout": 1000
+        },
+        {
+            "type": "localip",
+            "key": " ├ 🖧 ",
+            "keyColor": "33",
+            "format": "Local IP: [{#cyan}{ifname}{#}] {#bright_white}{ipv4}{#} - {#bright_white}{ipv6}{#}",
+            "showIpv6": true,
+            "showSpeed": true,
+        },
+        {
+            "type": "disk",
+            // 󱧮 
+            "format": "[{#cyan}{mount-from} {#bright_white} {#cyan}{mountpoint}{#}] {1} / {2} ({3}) - {#bright_white}{9}{#}",
+            "key": " ├ 󰋊 ",
+            "keyColor": "33",
+        },
+        {
+            "type": "monitor",
+            "key": " └  ",
+            "keyColor": "33",
+        },
+        "break",
+        {
+            "type": "command",
+            "key": "Weather",
+            "keyColor": "34",
+            "text": "[[ $(echo -n >/dev/tcp/1.1.1.1/53; echo $?) == 0 ]] &>/dev/null && echo $(curl -s 'https://wttr.in/?m&format=%l:+%c+%t+%w&F' | sed 's/°/° /') || echo wttr service unreachable",
+            "timeout": 2000
+        },        
+    ]
+}
