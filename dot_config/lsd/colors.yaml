@@ -1,0 +1,47 @@
+# ~/.config/lsd/colors.yaml
+
+user: 33 # 33: A medium blue for the user (owner) color
+group: 33 # 33: A medium blue for the group color
+
+permission:
+  read: 39 # 39: A light blue for read permission
+  write: 40 # 40: A vibrant green for write permission
+  exec: 244 # 244: A dark grey for execute permission
+  exec-sticky: 244 # 244: A dark grey for files with the sticky bit set
+  no-access: 240 # 240: A dark grey for no access permission
+  octal: 254 # 254: Off-white for octal permissions
+  acl: 39 # 39: A light blue for access control list
+  context: 39 # 39: A light blue for security context
+
+size:
+  none: 240 # 240: Dark grey for unknown or empty size
+  small: 247 # 247: Light grey for small files
+  medium: 250 # 250: Light grey for medium files
+  large: 254 # 254: Off-white for large files
+
+date:
+  hour-old: 250 # 250: Light grey for recently modified files (within the hour)
+  day-old: 244 # 244: Medium grey for files modified today
+  older: 240 # 240: Dark grey for older files
+
+inode:
+  valid: 39 # 39: A light blue for a valid inode
+  invalid: 240 # 240: Dark grey for an invalid inode
+
+links:
+  valid: 39 # 39: A light blue for a valid link
+  invalid: 240 # 240: Dark grey for an invalid link
+
+tree-edge: 250 # 250: Light grey for the tree structure lines
+
+git-status:
+  default: 240 # 240: Dark grey for default git status
+  unmodified: 240 # 240: Dark grey for unmodified files
+  ignored: 240 # 240: Dark grey for ignored files
+  new-in-index: 40 # 40: A vibrant green for new files staged for commit
+  new-in-workdir: 40 # 40: A vibrant green for new files in the working directory
+  typechange: 39 # 39: A light blue for files with a changed type
+  deleted: 9 # 9: A bright red for deleted files
+  renamed: 39 # 39: A light blue for renamed files
+  modified: 202 # 202: An orange for modified files
+  conflicted: 9 # 9: A bright red for conflicted files
