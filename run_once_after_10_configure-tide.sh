@@ -1,6 +1,7 @@
 #!/bin/bash
 # Applies a one-time, automated configuration to the Tide prompt.
 set -eu
+echo "Running: " $(basename $0)
 
 if fish -c "functions -q tide"; then
   echo "Applying automatic Tide configuration..."
