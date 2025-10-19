@@ -4,7 +4,7 @@ These are my personal dotfiles, managed by [Chezmoi](https://www.chezmoi.io/). T
 
 ## Prerequisite
 
-This setup assumes the `bootstrap-ansible.sh` script from the (Ansible repo)[https://github.com/MrBasa/ansible-bootstrap] has already been run successfully on the target machine. This ensures that `git`, `fish`, and `chezmoi` are installed and ready.
+This setup assumes the `bootstrap-ansible.sh` script from the [Ansible repo](https://github.com/MrBasa/ansible-bootstrap) has already been run successfully on the target machine. This ensures that `git`, `fish`, and `chezmoi` are installed and ready.
 
 ## Usage on a New Machine (Restoring Your Config)
 
