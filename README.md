@@ -4,13 +4,11 @@ These are my personal dotfiles, managed by [Chezmoi](https://www.chezmoi.io/). T
 
 ## Prerequisite
 
-This setup assumes the `ansible-bootstrap` playbook has already been run successfully on the target machine. This ensures that `git`, `fish`, and `chezmoi` are installed and ready.
+This setup assumes the `bootstrap-ansible.sh` script from the (Ansible repo)[https://github.com/MrBasa/ansible-bootstrap] has already been run successfully on the target machine. This ensures that `git`, `fish`, and `chezmoi` are installed and ready.
 
 ## Usage on a New Machine (Restoring Your Config)
 
 This is the **second and final step** in setting up a new environment. Run the following command to apply your personal configuration.
-
-**Important:** Replace `your-username` with your actual GitHub username.
 
 ```bash
 # Switch to the fish shell first
