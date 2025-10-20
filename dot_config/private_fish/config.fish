@@ -5,9 +5,9 @@
 if status is-interactive
 
 	# --- Non-local Console Exceptions ---
-	if not string match -iq "*linux*" $TERM
-		set -x TERM "xterm-256color"
-	end
+	# if not string match -iq "*linux*" $TERM
+	# 	set -x TERM "xterm-256color"
+	# end
 
 	set -l MY_EDITOR micro
 	set -l MY_VISUAL_EDITOR kate
