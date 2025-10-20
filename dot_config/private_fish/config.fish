@@ -43,8 +43,8 @@ if status is-interactive
                 return 1
             end
 
-            # Check if the command exists before trying to run it.
-            if command --query -- $argv[1]
+            # Check if the command exists (as an executable, function, or builtin).
+            if type --query -- $argv[1]
                 # If it exists, run the original command.
                 command $argv --help 2>&1 | bathelp
             else
