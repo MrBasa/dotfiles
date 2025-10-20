@@ -1,7 +1,7 @@
 #!/bin/bash
 # This script runs when ~/.config/fish/fish_plugins changes.
 # The hash below ensures the script only runs when the file's content changes.
-# fish_plugins hash: {{ include ".config/fish/fish_plugins" | sha256sum }}
+# fish_plugins hash: {{ include (joinPath .chezmoi.homeDir ".config" "fish" "fish_plugins") | sha256sum }}
 set -eu
 echo "Running: " $(basename $0)
 
