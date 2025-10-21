@@ -9,6 +9,7 @@ if status is-interactive
 	# 	set -x TERM "xterm-256color"
 	# end
 
+    # --- Set Default Editors ---
 	set -l MY_EDITOR micro
 	set -l MY_VISUAL_EDITOR kate
 
@@ -42,18 +43,6 @@ if status is-interactive
         zoxide init fish | source
     end
     
-    # --- 'please' Alias ---
-	# Run last command with sudo and remove it from history
-	alias please='echo (set_color -o yellow) "Go do that sudo that you do!"; commandline -i "sudo $history[1]"; history delete --exact --case-sensitive "$history[1]"'
-
-    # --- Path Assister  ---
-	# Enable use of dot in order to navigate to parent directories. Ex: "..." -> "cd ../../"
-	function multicd -d 'This turns any run of ".." into "cd ../../"'
-		set -l length (math (string length -- $argv) - 1)
-		echo cd (string repeat -n $length ../)
-	end	
-	abbr --add dotdot --regex '^\.\.+$' --function multicd
-
 	# --- LSD Directory Lister ---
 	if type -q lsd
 		alias ls="lsd"
@@ -81,6 +70,9 @@ if status is-interactive
 	if type -q fastfetch
 		alias ff="fastfetch"
 	end
+
+	# Please - Run last command with sudo and remove it from history
+	alias please='echo (set_color -o yellow) "Go do that sudo that you do!"; commandline -i "sudo $history[1]"; history delete --exact --case-sensitive "$history[1]"'
 
 	# --- Tide Config ---
     # Including some commonly tweaked Tide configs
