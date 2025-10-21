@@ -29,30 +29,12 @@ if status is-interactive
     # --- Bat Config ---
     if type -q bat or type -q batcat
         alias cat='bat'
+
         # - Set bat as a colorizing pager for man -
 	    export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | bat -p -lman'"
-	    # - Create 'help' command -
+
 	    # Alias to pipe help output to bat for syntax highlighting
 	    alias bathelp 'bat --plain --language=help'
-
-        # Override the default help command
-        function help -d "Calls the supplied command with '--help'"
-            # First, check if an argument was provided.
-            if not set -q argv[1]
-                echo "help: no help topic given"
-                return 1
-            end
-
-            # Check if the command exists (as an executable, function, or builtin).
-            if type --query -- $argv[1]
-                # If it exists, run the original command.
-                command $argv --help 2>&1 | bathelp
-            else
-                # If it doesn't exist, print a error message.
-                echo "help: command not found: '$argv[1]'"
-                return 127
-            end
-        end
     end
 
     # --- Zoxide ---
