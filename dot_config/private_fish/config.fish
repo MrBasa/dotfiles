@@ -39,7 +39,7 @@ if status is-interactive
 
     # --- Zoxide ---
     if type -q zoxide
-        zoxide init --cmd cd fish | source
+        zoxide init fish | source
     end
     
     # --- 'please' Alias ---
