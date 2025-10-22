@@ -4,10 +4,10 @@
 # Commands to run in interactive sessions can go here
 if status is-interactive
 
-	# --- Non-local Console Exceptions ---
-	# if not string match -iq "*linux*" $TERM
-	# 	set -x TERM "xterm-256color"
-	# end
+	# --- Configure Text Browser ---
+	if not set -q DISPLAY and type -q lynx
+	    set -x BROWSER lynx
+	end
 
     # --- Set Default Editors ---
 	set -l MY_EDITOR micro
@@ -15,16 +15,16 @@ if status is-interactive
 
     if set -q SSH_CONNECTION
         # In an SSH session, use a terminal-based editor.
-        set -gx EDITOR $MY_EDITOR
-        set -gx VISUAL $MY_EDITOR
+        set -x EDITOR $MY_EDITOR
+        set -x VISUAL $MY_EDITOR
     else if set -q DISPLAY
         # In a local graphical session, use Kate.
-        set -gx EDITOR $MY_EDITOR
-        set -gx VISUAL $MY_VISUAL_EDITOR
+        set -x EDITOR $MY_EDITOR
+        set -x VISUAL $MY_VISUAL_EDITOR
     else
         # In a local non-graphical session, use a terminal editor.
-        set -gx EDITOR $MY_EDITOR
-        set -gx VISUAL $MY_VISUAL_EDITOR
+        set -x EDITOR $MY_EDITOR
+        set -x VISUAL $MY_VISUAL_EDITOR
     end
 
     # --- Bat Config ---
@@ -62,7 +62,7 @@ if status is-interactive
 
     # --- File List Colors ---
     if type -q vivid
-    	set -gx LS_COLORS (vivid generate molokai)
+    	set -x LS_COLORS (vivid generate molokai)
     end
 
     # --- Aliases ---
@@ -76,15 +76,15 @@ if status is-interactive
 
 	# --- Tide Config ---
     # Including some commonly tweaked Tide configs
-	set -g tide_prompt_transient_enabled true
-	set -g tide_add_newline_before true
-	set -g tide_context_always_display false
-    set -g tide_prompt_icon_connection '·'
-	set -g tide_prompt_color_frame_and_connection 282828
+	#set -g tide_prompt_transient_enabled true
+	#set -g tide_add_newline_before true
+	#set -g tide_context_always_display false
+    #set -g tide_prompt_icon_connection '·'
+	#set -g tide_prompt_color_frame_and_connection 282828
     # Make OS icon prominent
-    set -g tide_os_color brwhite --bold
+    #set -g tide_os_color brwhite --bold
     # When the user is root, make the context bold red.
-    set -g tide_context_color_root brred --bold
+    #set -g tide_context_color_root brred --bold
 
     # --- CLI Trash ---
     if type -q trash-put
@@ -111,17 +111,20 @@ if status is-interactive
 
     # --- Welcome Message ---
 	function fish_greeting -d 'Prints a welcome message with shell version'
-	    if type -q figlet
-	        set_color brblue
-	        hostname -f | string upper | figlet -f slant -c -w 76 #(tput cols)
-            set_color normal
+	    # --- Remote Display Only ---
+	    if set -q SSH_CLIENT
+    	    if type -q figlet
+    	        set_color brblue
+    	        hostname -f | string upper | figlet -f slant -c -w 76 #(tput cols)
+                set_color normal
+            end
         end
-        
+
+        # --- Always Display ---
 	    if type -q fastfetch
 	        fastfetch
 	    end
-	    
-		#echo (set_color blue)🐟(set_color cyan) . ° ◯ · ◯(set_color normal) (fish --version)
+
 		echo (set_color blue)🐟(set_color normal) (fish --version)
 		echo -e (set_color cyan)'\e[2A\e[2C°\e[1A.\e[1A◯\e[3B'
 	end
