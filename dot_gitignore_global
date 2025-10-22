@@ -1,0 +1,25 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor - VS Code
+.vscode/
+*.code-workspace
+
+# Editor - Vim
+*.swp
+*.swo
+*~
+
+# Kate
+*.kate-swp
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# Environment files
+.env
+.env.local
