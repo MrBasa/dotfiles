@@ -4,9 +4,13 @@
 # Commands to run in interactive sessions can go here
 if status is-interactive
 
-	# --- Configure Text Browser ---
-	if not set -q DISPLAY and type -q lynx
-	    set -x BROWSER lynx
+	# --- Configure Text Web Browser ---
+	if not set -q DISPLAY
+	    if and type -q w3m
+	        set -x BROWSER w3m
+	    else if type -q lynx
+	        set -x BROWSER lynx
+	    end
 	end
 
     # --- Set Default Editors ---
