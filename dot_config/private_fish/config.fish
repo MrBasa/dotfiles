@@ -113,6 +113,11 @@ if status is-interactive
         end
     end
 
+    # --- Weather ---
+    function weather
+        command curl -s https://wttr.in
+    end
+
     # --- Welcome Message ---
 	function fish_greeting -d 'Prints a welcome message with shell version'
 	    # --- Remote Display Only ---
