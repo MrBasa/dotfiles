@@ -1,0 +1,6 @@
+Host EndeavourOS-Dev
+    HostName endeavouros-dev
+    User mrbasa
+Host podman1
+    HostName 192.168.50.50
+    User mrbasa

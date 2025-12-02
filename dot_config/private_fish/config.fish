@@ -33,8 +33,7 @@ if status is-interactive
 
     # --- Bat Config ---
     if type -q bat or type -q batcat
-        alias cat='bat'
-
+        #alias cat='bat'
         # - Set bat as a colorizing pager for man -
 	    export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | bat -p -lman'"
 
@@ -91,27 +90,35 @@ if status is-interactive
     #set -g tide_context_color_root brred --bold
 
     # --- CLI Trash ---
-    if type -q trash-put
-        alias trash='trash-put'
-        #alias rm='echo (set_color brred)"This is not the command you are looking for. "(set_color normal)"(Try \'"(set_color brcyan)"trash-put"(set_color normal)"\')"; false'
-
-        # A safer rm function that confirms before permanent deletion.
-        function rm --wraps rm -d "Wrapped 'rm' command with confirmation"
-            # If no files are specified, let the original rm handle it.
-            if test -z "$argv"; command rm; return; end
-        
-            echo -e "\e[1;31mYou are using 'rm' for permanent deletion.\e[0m"
-            read -P "Are you sure? (use 'trash' to be safer) [y/N] " -l reply
-        
-            if test (string lower -- $reply) = "y"
-                echo "Proceeding with permanent deletion..."
-                command rm $argv # Pass all original arguments to the real rm command
-            else
-                echo "Aborted."
-                return 1
-            end
-        end
-    end
+#     if type -q trash-put
+#         alias trash='trash-put'
+#         #alias rm='echo (set_color brred)"This is not the command you are looking for. "(set_color normal)"(Try \'"(set_color brcyan)"trash-put"(set_color normal)"\')"; false'
+#
+#         # A safer rm function that confirms before permanent deletion.
+#         function rm --wraps rm -d "Wrapped 'rm' command with confirmation"
+#             if status --is-command-substitution
+#                 return
+#             end
+#
+#             # If no files are specified, let the original rm handle it.
+#             if test -z "$argv"
+#                 command rm
+#                 return $status
+#             end
+#
+#             echo -e "\e[1;31mYou are using 'rm' for permanent deletion.\e[0m"
+#             read -P "Are you sure? (use 'trash' to be safer) [y/N] " -l reply
+#
+#             if test (string lower -- $reply) = "y"
+#                 echo "Proceeding with permanent deletion..."
+#                 command rm $argv... # Pass all original arguments to the real rm command
+#                 return $status
+#             else
+#                 echo "Aborted."
+#                 return 1
+#             end
+#         end
+#     end
 
     # --- Weather ---
     function weather
