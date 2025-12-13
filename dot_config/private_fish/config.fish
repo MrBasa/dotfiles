@@ -122,7 +122,7 @@ if status is-interactive
 
     # --- Weather ---
     function weather
-        command curl -s https://wttr.in/?m
+        command curl --connect-timeout 10 --max-time 20 -s https://wttr.in/?m
     end
 
     # --- Welcome Message ---
