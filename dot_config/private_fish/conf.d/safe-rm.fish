@@ -23,46 +23,12 @@ function rm --wraps rm -d "Safe 'rm' wrapper with trash and destructive-op check
     set -l c_norm (set_color normal)    # Reset
 
     # --- Pre-flight checks ---
-    # Store original command.
-    #set -l original_command (commandline)
-    # Don't run any prompts if we're just in a completion
     if status --is-command-substitution; return; end
-    # If no files are specified, let the original rm handle it and show its error.
     if test -z "$argv"; command rm; return $status; end
-    # If --help or --version is passed, just run the original command and exit.
     if contains -- --help $argv; or contains -- --version $argv; command rm $argv; return $status; end
 
-    #--- Choose trash vs rm ---
-    echo $c_abort" "$c_m"You are using '"$c_cmd"rm"$c_m"' ("$c_warn"permanent delete"$c_m"). Use '"$c_cmd"trash-put"$c_m"' instead?"$c_norm
-    read -n 1 -P $c_m"("$c_cmd"Y"$c_m")es use 'trash', ("$c_cmd"n"$c_m")o continue with rm, or ("$c_cmd"a"$c_m")bort? ["$c_cmd"Y"$c_m"/"$c_cmd"n"$c_m"/"$c_cmd"a"$c_m"]: "$c_norm" " reply
-    #echo # Add a newline after the single-key read
-
-    switch (string lower -- $reply)
-        case y ''
-            # User chose 'Y'. Replace command line and exit.
-            echo $c_m"↪ Replacing with 'trash-put'..."$c_norm
-            set -l cmd_list trash
-            for arg in $argv
-                set -a cmd_list (string escape -- $arg)
-            end
-            commandline --replace (string join " " $cmd_list)
-            return
-        case n
-            # User confirmed 'yes'. Proceed to Stage 2.
-            echo $c_m"Proceeding with 'rm'..."$c_norm
-        case '*' # 'a', or anything else
-            # User aborted. Clear command line and exit.
-            echo $c_abort"🚫 Aborted."$c_norm
-            set -l cmd_list rm
-            for arg in $argv
-                set -a cmd_list (string escape -- $arg)
-            end
-            commandline --replace (string join " " $cmd_list)
-            return 1
-    end
-
-    # --- Check for destructive operation ---
-    # Check args
+    # --- Parse Arguments (Moved to Top) ---
+    # We do this early so we can separate flags from files for the 'trash' command
     set -l is_recursive 0
     set -l options
     set -l targets
@@ -79,6 +45,37 @@ function rm --wraps rm -d "Safe 'rm' wrapper with trash and destructive-op check
         end
     end
 
+    # --- Choose trash vs rm ---
+    echo $c_abort" "$c_m"You are using '"$c_cmd"rm"$c_m"' ("$c_warn"permanent delete"$c_m"). Use '"$c_cmd"trash-put"$c_m"' instead?"$c_norm
+    read -n 1 -P $c_m"("$c_cmd"Y"$c_m")es use 'trash', ("$c_cmd"n"$c_m")o continue with rm, or ("$c_cmd"a"$c_m")bort? ["$c_cmd"Y"$c_m"/"$c_cmd"n"$c_m"/"$c_cmd"a"$c_m"]: "$c_norm" " reply
+
+    switch (string lower -- $reply)
+        case y ''
+            # User chose 'Y'. Replace with trash-put.
+            # CRITICAL FIX: Only use $targets (files), ignoring $options (flags like -rf)
+            echo $c_m"↪ Replacing with 'trash-put'..."$c_norm
+            
+            # Escape targets to handle spaces/special chars safely
+            set -l cmd_list trash (string escape -- $targets)
+            
+            # Use 'string join --' to prevent parsing errors
+            commandline --replace (string join -- " " $cmd_list)
+            return
+        case n
+            # User confirmed 'yes'. Proceed to Stage 2.
+            echo $c_m"Proceeding with 'rm'..."$c_norm
+        case '*' # 'a', or anything else
+            # User aborted. Restore the ORIGINAL rm command (with flags).
+            echo $c_abort"🚫 Aborted."$c_norm
+            
+            set -l cmd_list rm (string escape -- $argv)
+            commandline --replace (string join -- " " $cmd_list)
+            return 1
+    end
+
+    # --- Check for destructive operation ---
+    # We already parsed options/targets above, so we just check logic here.
+    
     # Check if we're in The Danger Zone!
     set -l is_dangerous 0
     set -l danger_reason ""
